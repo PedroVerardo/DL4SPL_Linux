@@ -4,6 +4,11 @@ import pickle
 from sklearn.model_selection import train_test_split
 
 class ModelStatistics():
+    '''
+    This class is used to generate some useful statistics from the models,
+    like the best models for each hyperparamiter. It also can be used to clean
+    the data and reorder it.
+    '''
     def __init__(self,path_to_model_info: str, info_format: str, transpose: bool = False):
         self.format = info_format
         self.transpose = transpose
@@ -18,7 +23,16 @@ class ModelStatistics():
         
         
         
-    def generate_dataframe(self, sep: str = ','):
+    def generate_dataframe(self, sep: str = ',') -> pd.DataFrame:
+        """Generate a dataframe from the data file
+
+        Args:
+            sep (str, optional): separation of csv files. Set defaults to ','.
+
+        Returns:
+            pd.Dataframe: Dataframe with the data from the file, cleaned and
+            ordered by default with our training pattern data.
+        """
         if self.format == 'pkl' or self.format == 'pickle':
             with open(path_to_models_statistics,"rb") as f:
                 model_statistics = pickle.load(f)
@@ -42,7 +56,6 @@ class ModelStatistics():
         elif self.format == 'parquet' or self.format == 'pq':
             df = pd.read_parquet(path_to_model_info)
 
-            
         else:
             raise "Not suported format error"
             
@@ -52,7 +65,15 @@ class ModelStatistics():
         return df
     
     def standard_cleaner(self, df: pd.DataFrame) -> pd.DataFrame:
-        
+        """Standard cleaner for the dataframe with our training pattern data file.
+
+
+        Args:
+            df (pd.DataFrame): Dataframe with the data from the pickle file.
+
+        Returns:
+            pd.DataFrame: More readable data from pikle file.
+        """
         df_reset = df.reset_index()
         df_split = df_reset['index'].str.split('_', expand=True)
         
