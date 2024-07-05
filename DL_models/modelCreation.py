@@ -58,6 +58,15 @@ class GridSearch():
 
 
     def _translate_activation_function(self, activation: str) -> nn:
+        """Translate the activation function in the string name to
+        a PyTorch activation function method.
+
+        Args:
+            activation (str): the name of a activation function to be translated.
+
+        Returns:
+            nn: A PyTorch activation function method.
+        """
         activation = activation.lower()
         if activation == "sigmoid":
             return nn.Sigmoid()
@@ -79,6 +88,17 @@ class GridSearch():
              return nn.ReLU()
         
     def _translate_dropout_value(self, dropout: str) -> float:
+        """Translate the dropout value in the string name
+        to a float value.
+
+        Args:
+            dropout (str): The name of the dropout value to be translated.
+            Example: "Drop0.1"
+
+        Returns:
+            float: A float value of the dropout to be passed
+            on the inicialisation of allModels models.
+        """
         dropout = dropout.lower()
 
         dropout_value = dropout[4:]
@@ -89,6 +109,19 @@ class GridSearch():
         return float(dropout[4:])
     
     def _translate_optimizer(self,optomizer: str, model: nn.Module, learning_rate: float) -> torch.optim:
+        """Translate the optimizer in the string name to a PyTorch method.
+        This function have more parameters than the others because the optimizer needs
+        the model and the learning rate to be initialized.
+
+        Args:
+            optomizer (str): optimizer name to be translated.
+            model (nn.Module): the actual model to recive the optimizer.
+            learning_rate (float): a normal float value to be passed to 
+            the optimizer learning rate paramiter.
+
+        Returns:
+            torch.optim: A PyTorch configured optimizer.
+        """
         optomizer = optomizer.lower()
         if optomizer == "adam":
             return torch.optim.Adam(model.parameters(), lr=learning_rate , fused=True)
