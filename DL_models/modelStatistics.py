@@ -98,6 +98,17 @@ class ModelStatistics():
     
     
     def clean_and_reorder(self, personalized_cleaner_function = None) -> pd.DataFrame:
+        """Clean and reorder the data frame with our training pattern data file.
+
+            Args:
+                personalized_cleaner_function (function, optional): To make the 
+                code more generalizable, wecreate one function that uses your
+                personalized cleaner. This variable receives a data frame as a
+                parameter and defaults to None.
+
+            Returns:
+                pd.DataFrame: Cleaned dataframe.
+        """
         
         df = self.generate_dataframe()
         

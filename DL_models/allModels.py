@@ -1,12 +1,14 @@
+import numpy as np
 from torch import nn
 import torch.nn.init as init
-import numpy as np
+
 
 
 '''
 The main idea of this file is to create a class for each model that we want to test.
-Each class will have the same structure, but with different number of layers and neurons in each layer.
-Testing different architectures and see which one performs better.
+Each class will have the same structure, but with different number of layers
+and neurons in each layer. Testing different architectures and see which one
+performs better.
 '''
 
 #-------------------------------Funnel--------------------------------------------------
@@ -32,23 +34,21 @@ class Model_Funnel1(nn.Module):
         self.activation = activation
 
     def inicialize_values(self, features: int, classes: int):
-        self.inputLayer = nn.Linear(features, int(features*2))
-        self.activationLayer = self.activation
+        self.input_layer = nn.Linear(features, int(features*2))
+        self.activation_layer = self.activation
         self.dropout = nn.Dropout(self.dropout_value)
-        self.hiddenLayer1 = nn.Linear(int(features*2),int((features*2)/12))
-        self.outputLayer = nn.Linear(int((features*2)/12), classes)
-        
+        self.hidden_layer1 = nn.Linear(int(features*2),int((features*2)/12))
+        self.output_layer = nn.Linear(int((features*2)/12), classes)
 
     def get_name(self):
         return self.name
 
     def forward(self,x):
-        z = self.inputLayer(x)
-        z = self.activationLayer(self.hiddenLayer1(z))
+        z = self.input_layer(x)
+        z = self.activation_layer(self.hidden_layer1(z))
         z = self.dropout(z)
-        z = self.outputLayer(z)
+        z = self.output_layer(z)
         return z
-    
 class Model_Funnel2(nn.Module):
     def __init__(self, activation: nn, dropout_value: float, name: str):
         super().__init__()
@@ -57,25 +57,25 @@ class Model_Funnel2(nn.Module):
         self.activation = activation
 
     def inicialize_values(self, features: int, classes: int):
-        self.inputLayer = nn.Linear(features, int(features*2))
-        self.activationLayer = self.activation
+        self.input_layer = nn.Linear(features, int(features*2))
+        self.activation_layer = self.activation
         self.dropout = nn.Dropout(self.dropout_value)
-        self.hiddenLayer1 = nn.Linear(int(features*2),int((features*2)/6))
-        self.hiddenLayer2 = nn.Linear(int(features*2/6),int((features*2)/12))
-        self.outputLayer = nn.Linear(int((features*2)/12), classes)
+        self.hidden_layer1 = nn.Linear(int(features*2),int((features*2)/6))
+        self.hidden_layer2 = nn.Linear(int(features*2/6),int((features*2)/12))
+        self.output_layer = nn.Linear(int((features*2)/12), classes)
 
     def get_name(self):
         return self.name
 
     def forward(self,x):
-        z = self.inputLayer(x)
-        z = self.hiddenLayer1(z)
-        z = self.activationLayer(z)
+        z = self.input_layer(x)
+        z = self.hidden_layer1(z)
+        z = self.activation_layer(z)
         z = self.dropout(z)
-        z = self.hiddenLayer2(z)
-        z = self.activationLayer(z)
+        z = self.hidden_layer2(z)
+        z = self.activation_layer(z)
         z = self.dropout(z)
-        z = self.outputLayer(z)
+        z = self.output_layer(z)
         return z
 #-------------------------------Straight--------------------------------------------------
 '''
@@ -98,51 +98,49 @@ class Model_Straight1(nn.Module):
         self.dropout_value = dropout_value
         self.name = name
         self.activation = activation
-        
+
     def inicialize_values(self, features: int, classes: int):
-        self.inputLayer = nn.Linear(features, int(features))
-        self.activationLayer = self.activation
+        self.input_layer = nn.Linear(features, int(features))
+        self.activation_layer = self.activation
         self.dropout = nn.Dropout(self.dropout_value)
-        self.hiddenLayer1 = nn.Linear(int(features),int((features)))
-        self.outputLayer = nn.Linear(int((features)), classes)
+        self.hidden_layer1 = nn.Linear(int(features),int((features)))
+        self.output_layer = nn.Linear(int((features)), classes)
         self.name = self.name
 
     def get_name(self):
         return self.name
 
     def forward(self,x):
-        z = self.inputLayer(x)
-        z = self.activationLayer(self.hiddenLayer1(z))
+        z = self.input_layer(x)
+        z = self.activation_layer(self.hidden_layer1(z))
         z = self.dropout(z)
-        z = self.outputLayer(z)
+        z = self.output_layer(z)
         return z
-    
 class Model_Straight2(nn.Module):
     def __init__(self, activation: nn, dropout_value: int, name: str):
         super().__init__()
         self.dropout_value = dropout_value
         self.name = name
         self.activation = activation
-    
+
     def inicialize_values(self, features: int, classes: int):
-        self.inputLayer = nn.Linear(features, int(features))
-        self.activationLayer = self.activation
-        self.hiddenLayer1 = nn.Linear(int(features),int((features)))
-        self.hiddenLayer2 = nn.Linear(int(features),int((features)))
+        self.input_layer = nn.Linear(features, int(features))
+        self.activation_layer = self.activation
+        self.hidden_layer1 = nn.Linear(int(features),int((features)))
+        self.hidden_layer2 = nn.Linear(int(features),int((features)))
         self.dropout = nn.Dropout(self.dropout_value)
-        self.outputLayer = nn.Linear(int((features)), classes)
-        
+        self.output_layer = nn.Linear(int((features)), classes)
 
     def get_name(self):
         return self.name
 
     def forward(self,x):
-        z = self.inputLayer(x)
-        z = self.activationLayer(self.hiddenLayer1(z))
+        z = self.input_layer(x)
+        z = self.activation_layer(self.hidden_layer1(z))
         z = self.dropout(z)
-        z = self.activationLayer(self.hiddenLayer2(z))
+        z = self.activation_layer(self.hidden_layer2(z))
         z = self.dropout(z)
-        z = self.outputLayer(z)
+        z = self.output_layer(z)
         return z
     
 if __name__ == "__main__":
