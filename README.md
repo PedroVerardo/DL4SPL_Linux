@@ -26,6 +26,7 @@ The notebooks are used for simple parts of the paper that do not require a lot o
 
 ## How to run it
 > Firstly, it is important to note that the model creation process can take several weeks to complete. We do not recommend running it unless you have an Nvidia RTX 3090 or a superior GPU. A simpler approach is to run only the best models using `singlePytorch.ipynb` or `singleTensorflow.ipynb` to test the top-performing models mentioned in the article.
+- Open a new terminal to install the dependencies of the project using `pip install requirements.txt`
+- Select *singlePytorch* or *singleTensorflow* notebooks to run the determinate model, changing the hyperparameters in that. Furthermore, download the Linux data gathered in the original [paper](https://dl.acm.org/doi/abs/10.1145/3546932.3546997?casa_token=5GnRV_DUr_wAAAAA:MxyEVvluTm-3ExRjvfnh64LJlWI1e6ii9_Ht5n9eNGDdGaINTwYctEjo58IwVNYUPwn_rS0LwpMK).
 
-Select *singlePytorch* or *singleTensorflow* notebooks to run the determinate model, changing the hyperparameters in that. Furthermore, download the Linux data gathered in the original [paper](https://dl.acm.org/doi/abs/10.1145/3546932.3546997?casa_token=5GnRV_DUr_wAAAAA:MxyEVvluTm-3ExRjvfnh64LJlWI1e6ii9_Ht5n9eNGDdGaINTwYctEjo58IwVNYUPwn_rS0LwpMK).
 <br>***OBS: to run the model creation function run the file main.py in the path DL_models/main.py***
